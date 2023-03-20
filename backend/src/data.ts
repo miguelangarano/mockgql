@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 
 export const status = [
     {
@@ -105,4 +104,17 @@ export const products = [
     presentationAmount: 300,
     status: status[1],
   },
+];
+
+export const services = [
+    {
+        id: "80c4b654-9e4a-46bf-86d0-0c3a70ef4727",
+        name: "Service 1",
+        status: status[0]
+    },
+    {
+        id: "f5f1a175-1e3e-4644-8588-8441fab638a2",
+        name: "Service 2",
+        status: status[1]
+    }
 ];

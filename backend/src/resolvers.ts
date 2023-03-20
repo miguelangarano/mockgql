@@ -3,6 +3,7 @@ import {
   measureUnits,
   measureUnitTypes,
   products,
+  services,
   status,
   supplyCategories,
   supplyTypes,
@@ -68,4 +69,12 @@ export function getNewProductData() {
     measureUnits: getMeasureUnits(),
     status: getStatus()
   }
+}
+
+export function getServices() {
+  return services;
+}
+
+export function getService(id: string) {
+  return services.find(ele => ele.id === id);
 }

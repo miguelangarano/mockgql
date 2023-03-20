@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { getActiveIngredient, getActiveIngredients, getMeasureUnit, getMeasureUnits, getMeasureUnitTypes, getNewProductData, getProduct, getProducts, getStatus, getSupplyCategories, getSupplyCategory, getSupplyType, getSupplyTypes } from "./resolvers";
+import { getActiveIngredient, getActiveIngredients, getMeasureUnit, getMeasureUnits, getMeasureUnitTypes, getNewProductData, getProduct, getProducts, getService, getServices, getStatus, getSupplyCategories, getSupplyCategory, getSupplyType, getSupplyTypes } from "./resolvers";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -58,21 +58,29 @@ const typeDefs = `#graphql
     status: Status
   }
 
+  type Service {
+    id: ID!
+    name: String
+    status: Status
+  }
+
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   type Query {
     status: [Status]
     supplyTypes: [SupplyType]
-    supplyType: SupplyType
+    supplyType(id: String): SupplyType
     supplyCategories: [SupplyCategory]
-    supplyCategory: SupplyCategory
+    supplyCategory(id: String): SupplyCategory
     activeIngredients: [ActiveIngredient]
-    activeIngredient: ActiveIngredient
+    activeIngredient(id: String): ActiveIngredient
     measureUnitTypes: [MeasureUnitType]
     measureUnits: [MeasureUnit]
-    measureUnit: MeasureUnit
+    measureUnit(id: String): MeasureUnit
     products: [Product]
     product(id: String): Product
+    services: [Service]
+    service(id: String): Service
   }
 `;
 
@@ -82,16 +90,18 @@ const resolvers = {
   Query: {
     status: () => getStatus(),
     supplyTypes: () => getSupplyTypes(),
-    supplyType: (id: string) => getSupplyType(id),
+    supplyType: (_: any, { id }:{id: string}) => getSupplyType(id),
     supplyCategories: () => getSupplyCategories(),
-    supplyCategory: (id: string) => getSupplyCategory(id),
+    supplyCategory: (_: any, { id }:{id: string}) => getSupplyCategory(id),
     activeIngredients: () => getActiveIngredients(),
-    activeIngredient: (id: string) => getActiveIngredient(id),
+    activeIngredient: (_: any, { id }:{id: string}) => getActiveIngredient(id),
     measureUnitTypes: () => getMeasureUnitTypes(),
     measureUnits: () => getMeasureUnits(),
-    measureUnit: (id: string) => getMeasureUnit(id),
+    measureUnit: (_: any, { id }:{id: string}) => getMeasureUnit(id),
     products: () => getProducts(),
-    product: (_: any, { id }:{id: string}) => getProduct(id)
+    product: (_: any, { id }:{id: string}) => getProduct(id),
+    services: () => getServices(),
+    service: (_: any, { id }:{id: string}) => getService(id),
   },
 };
 
